@@ -1,0 +1,45 @@
+name: CICD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build Project
+        run: mvn clean install -DskipTests
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build -t vishnu11759/edukan .
+
+      - name: Publish image to Docker Hub
+        run: docker push vishnu11759/edukan:latest
+
+  deploy:
+    needs: build
+    runs-on: aws-ec2
+    steps:
+      - name: Pull Image from Docker Hub
+        run: docker pull vishnu11759/edukan:latest
+
+      - name: Stop and Remove old container
+        run: |
+          docker stop springboot-example-container || true
+          docker rm springboot-example-container || true
+
+      - name: Run Docker container
+        run: docker run -d -p 8081:8081 --name springboot-example-container vishnu11759/edukan

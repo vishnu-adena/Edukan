@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DatabaseMigrationSettings" lastSelectedDirectory="src\main\resources\db\migration" />
+  <component name="JpaLiquibaseChangesConfig">
+    <exclude-change idName="orders" tagName="createTable" />
+    <exclude-change idName="product#description" tagName="modifyDataType" />
+    <exclude-change idName="category#is_deleted" tagName="dropNotNullConstraint" />
+    <exclude-change idName="product#is_deleted" tagName="dropNotNullConstraint" />
+  </component>
+</project>

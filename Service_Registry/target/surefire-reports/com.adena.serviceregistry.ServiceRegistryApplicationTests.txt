@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.adena.serviceregistry.ServiceRegistryApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.00 s -- in com.adena.serviceregistry.ServiceRegistryApplicationTests
